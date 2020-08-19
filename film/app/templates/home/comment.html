@@ -1,0 +1,56 @@
+{% extends "home/base_user.html" %}
+{% import 'ui/home_page.html' as pg %}
+
+{% block info %}
+<div class="col-md-9">
+    <div class="panel panel-warning">
+        <div class="panel-heading">
+            <h3 class="panel-title"><span class="glyphicon glyphicon-map-marker"></span>&nbsp;评论记录</h3>
+        </div>
+        <div class="panel-body">
+            <ul class="commentList">
+                {% for i in page_data.items %}
+                    <li class="item cl">
+                        <a href="user.html">
+                            <i class="avatar size-L radius">
+                                {% if i.user.face %}
+                                <img alt="50x50" src="{{ url_for('static', filename='uploads/users/'+i.user.face) }}" style='width:50px;height:50px;border:1px solid #abcdef;' class="img-circle" ">
+                                {% else %}
+                                <img alt="50x50" data-src="holder.js/50x50" style='width:50px;height:50px;border:1px solid #abcdef;' class="img-circle" ">
+                                {% endif %}
+                            </i>
+                        </a>
+                        <div class="comment-main">
+                            <header class="comment-header">
+                                <div class="comment-meta">
+                                    <a class="comment-author" href="user.html">{{ i.user.name }}</a>
+                                    评论
+                                    <a class="comment-author" href="{{ url_for('home.video', id=i.movie.id) }}">"{{ i.movie.title }}"</a>
+                                    于
+                                    <time title="2016-12-07 09:12:51" datetime="2016-12-07 09:12:51">{{ i.add_time }}</time>
+                                </div>
+                            </header>
+                            <div class="comment-body">
+                                <p>{{ i.content | safe }}</p>
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+                </ul>
+                <div class="col-md-12 text-center">
+                    {{ pg.page(page_data, 'home.comment') }}
+                </div>
+        </div>
+    </div>
+</div>
+{% endblock info %}
+
+<!-- 修改高亮 -->
+{% block js %}
+<script>
+    $(document).ready(function(){
+        $('#m-3').addClass("active");
+    });
+</script>
+{% endblock js %}
+

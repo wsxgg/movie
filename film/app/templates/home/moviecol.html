@@ -1,0 +1,41 @@
+{% extends "home/base_user.html" %}
+{% import 'ui/home_page.html' as pg %}
+
+{% block info %}
+<div class="col-md-9">
+    <div class="panel panel-warning">
+        <div class="panel-heading">
+            <h3 class="panel-title"><span class="glyphicon glyphicon-map-marker"></span>&nbsp;收藏电影</h3>
+        </div>
+        <div class="panel-body">
+            <div class="col-md-12">
+                {% for i in page_data.items %}
+                <div class="media">
+                    <div class="media-left">
+                        <a href="#">
+                            <img class="media-object" src="{{ url_for('static', filename='uploads/movies/'+i.movie.logo) }}"  style='width:131px;height:83px;' alt="{{ i.title }}">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">{{ i.title }}<a href="{{ url_for('home.video', id=i.movie.id) }}" class="label label-primary pull-right"><span class="glyphicon glyphicon-play"></span>播放影片</a></h4>
+                        {{ i.movie.info }}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="col-md-12 text-center" style="margin-top:6px;">
+                {{ pg.page(page_data, 'home.moviecol') }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock info %}
+
+<!-- 修改高亮 -->
+{% block js %}
+<script>
+    $(document).ready(function(){
+        $('#m-5').addClass("active");
+    });
+</script>
+{% endblock js %}
